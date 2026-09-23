@@ -9,20 +9,16 @@ const STEP_Y = 0.11;
 const STEP_Z = 0.5;
 const ROTATE_Y = 50; // deg — tiles face the viewer's left, like cards in a rack
 const ROTATE_Z = -3;
-const DRIFT = 0.35; // tiles per second the stream moves on its own
 const BEHIND = 3; // tiles kept on screen after they pass the front
 
 /**
- * The index page: every tile laid out in 3D, one behind the other, drifting
- * forever. Scroll / drag / arrow keys push it along; it wraps around endlessly.
+ * The index page: every tile laid out in 3D, one behind the other.
+ * Scroll / drag / arrow keys move it along; it wraps around endlessly.
  */
 export function createStream({ root, world, tiles, onOpen }) {
   const n = tiles.length;
   let target = 0;
   let current = 0;
-  let direction = 1;
-  let driftScale = 1;
-  let hovering = false;
   let visible = false;
   let running = false;
   let lastTime = 0;
@@ -44,8 +40,6 @@ export function createStream({ root, world, tiles, onOpen }) {
     el.addEventListener('click', () => {
       if (!suppressClick) onOpen(i);
     });
-    el.addEventListener('pointerenter', () => (hovering = true));
-    el.addEventListener('pointerleave', () => (hovering = false));
     world.append(el);
     return { el, video: el.querySelector('video'), playing: false };
   });
@@ -99,16 +93,16 @@ export function createStream({ root, world, tiles, onOpen }) {
     }
     const dt = lastTime ? Math.min(64, time - lastTime) : 16.7;
     lastTime = time;
-
-    // Ease the drift down while a tile is hovered or the stream is dragged.
-    const wantDrift = hovering || dragging || reducedMotion.matches ? 0 : 1;
-    driftScale += (wantDrift - driftScale) * (1 - Math.pow(0.95, dt / 16.667));
-    target += direction * DRIFT * driftScale * (dt / 1000);
-
     const k = reducedMotion.matches ? 1 : 1 - Math.pow(1 - 0.09, dt / 16.667);
     current += (target - current) * k;
+    if (Math.abs(target - current) < 0.0005) current = target;
     render();
-    requestAnimationFrame(frame);
+    // Sleep once the stream has settled; input wakes it up again.
+    if (current !== target || dragging) {
+      requestAnimationFrame(frame);
+    } else {
+      running = false;
+    }
   }
 
   function start() {
@@ -119,9 +113,8 @@ export function createStream({ root, world, tiles, onOpen }) {
   }
 
   function push(amount) {
-    if (!amount) return;
-    direction = Math.sign(amount);
     target += amount;
+    start();
   }
 
   // --- wheel / trackpad --------------------------------------------------
@@ -166,9 +159,8 @@ export function createStream({ root, world, tiles, onOpen }) {
     }
     if (!suppressClick) return;
     // Dragging left or up travels deeper into the stream.
-    const next = startTarget + (-dx - dy) / (size * 0.9);
-    if (next !== target) direction = Math.sign(next - target);
-    target = next;
+    target = startTarget + (-dx - dy) / (size * 0.9);
+    start();
   });
 
   const endDrag = (e) => {

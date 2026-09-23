@@ -57,31 +57,31 @@ button {
 /* Fixed chrome: top-left intro, bottom bar                           */
 /* ------------------------------------------------------------------ */
 
-.bottombar {
+.topnav {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   z-index: 30;
   display: flex;
   justify-content: center;
-  padding: 0 var(--gutter) calc(var(--gutter) + env(safe-area-inset-bottom));
-  font-size: 13px;
-  font-weight: 500;
+  padding: calc(var(--gutter) + env(safe-area-inset-top)) var(--gutter) 0;
+  font-size: 20px;
+  font-weight: 600;
   pointer-events: none;
 }
 
 /* Content fades to black under the nav so the text stays readable. */
-.bottombar::before {
+.topnav::before {
   content: '';
   position: absolute;
-  inset: -70px 0 0;
+  inset: 0 0 -70px;
   z-index: -1;
-  background: linear-gradient(to top, #000 25%, transparent);
+  background: linear-gradient(to bottom, #000 25%, transparent);
   pointer-events: none;
 }
 
-.bottombar > * {
+.topnav > * {
   pointer-events: auto;
 }
 
@@ -97,19 +97,19 @@ button {
   display: none;
 }
 
-/* Plain text buttons: no background, the open page is simply full strength. */
+/* Plain solid-white text buttons; the open page is underlined. */
 .nav a {
   padding: 6px 0;
   color: #fff;
-  opacity: 0.5;
   text-decoration: none;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
   white-space: nowrap;
-  transition: opacity 0.25s;
 }
 
 .nav a:hover,
 .nav a[aria-current='page'] {
-  opacity: 1;
+  text-decoration-line: underline;
 }
 
 /* ------------------------------------------------------------------ */
@@ -203,7 +203,7 @@ button {
 
 .page {
   min-height: 100vh;
-  padding: calc(var(--gutter) + 40px) var(--gutter) 140px;
+  padding: calc(var(--gutter) + 110px) var(--gutter) 80px;
   animation: page-in 0.7s var(--ease) both;
 }
 
@@ -568,8 +568,12 @@ button {
 }
 
 @media (max-width: 520px) {
+  .topnav {
+    font-size: 14px;
+  }
+
   .nav {
-    font-size: 12px;
+    gap: 10px;
   }
 }
 

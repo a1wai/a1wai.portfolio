@@ -13,15 +13,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <!-- Index: the 3D tile stream -->
-  <main id="stream" class="stream" aria-label="Portfolio tiles">
-    <div class="stream-world" id="stream-world"></div>
-  </main>
-
-  <!-- Every other page renders in here -->
-  <section id="page" class="page" hidden></section>
-
-  <footer class="bottombar">
+  <header class="topnav">
     <nav class="nav" aria-label="Main">
       <a href="/videos" data-link data-route="videos">Videos</a>
       <a href="/social-media" data-link data-route="social-media">Social Media</a>
@@ -29,7 +21,15 @@
       <a href="/projects" data-link data-route="projects">Projects</a>
       <a href="/about" data-link data-route="about">About</a>
     </nav>
-  </footer>
+  </header>
+
+  <!-- Index: the 3D tile stream -->
+  <main id="stream" class="stream" aria-label="Portfolio tiles">
+    <div class="stream-world" id="stream-world"></div>
+  </main>
+
+  <!-- Every other page renders in here -->
+  <section id="page" class="page" hidden></section>
 
   <!-- Tile detail overlay -->
   <div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
