@@ -1,0 +1,430 @@
+{
+  "site": {
+    "name": "A1WAI",
+    "intro": "A1WAI is a creator, builder and designer making videos, social content, hardware builds and digital projects.",
+    "email": "hello@example.com",
+    "copyright": "©2026 A1WAI"
+  },
+  "pages": {
+    "videos": {
+      "title": "Videos",
+      "intro": "Films, edits and motion work. Placeholder intro — send me the real text for this page."
+    },
+    "social-media": {
+      "title": "Social Media",
+      "intro": "Where I post day to day. Placeholder intro — send me the real text for this page."
+    },
+    "builds": {
+      "title": "Builds",
+      "intro": "Things I have physically built. Placeholder intro — send me the real text for this page."
+    },
+    "projects": {
+      "title": "Projects",
+      "intro": "Selected digital projects. Placeholder intro — send me the real text for this page."
+    },
+    "about": {
+      "title": "About",
+      "headline": "Placeholder headline: one bold sentence about who you are and what you make.",
+      "paragraphs": [
+        "Placeholder bio paragraph one. Tell visitors where you are from, what you do and what drives your work.",
+        "Placeholder bio paragraph two. Mention clients, collaborations, awards or anything you are proud of."
+      ],
+      "sections": [
+        {
+          "title": "Services",
+          "items": [
+            "Video editing",
+            "Motion graphics",
+            "Social media content",
+            "Hardware builds",
+            "Web & app projects"
+          ]
+        },
+        {
+          "title": "Tools",
+          "items": [
+            "Premiere Pro",
+            "After Effects",
+            "Blender",
+            "Figma",
+            "Node.js"
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Instagram",
+          "url": "#"
+        },
+        {
+          "label": "TikTok",
+          "url": "#"
+        },
+        {
+          "label": "YouTube",
+          "url": "#"
+        },
+        {
+          "label": "X / Twitter",
+          "url": "#"
+        }
+      ]
+    }
+  },
+  "tiles": [
+    {
+      "id": "video-01",
+      "category": "videos",
+      "title": "Showreel 2026",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-01.webm",
+        "poster": "/media/videos/video-01.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "video-02",
+      "category": "videos",
+      "title": "Music Video",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-02.webm",
+        "poster": "/media/videos/video-02.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "video-03",
+      "category": "videos",
+      "title": "Brand Commercial",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-03.webm",
+        "poster": "/media/videos/video-03.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "video-04",
+      "category": "videos",
+      "title": "Short Film",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-04.webm",
+        "poster": "/media/videos/video-04.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "video-05",
+      "category": "videos",
+      "title": "Motion Graphics",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-05.webm",
+        "poster": "/media/videos/video-05.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "video-06",
+      "category": "videos",
+      "title": "Behind the Scenes",
+      "subtitle": "Video · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Editing",
+        "Color",
+        "Sound"
+      ],
+      "media": {
+        "type": "video",
+        "src": "/media/videos/video-06.webm",
+        "poster": "/media/videos/video-06.jpg"
+      },
+      "link": {
+        "label": "Watch full video",
+        "url": "#"
+      }
+    },
+    {
+      "id": "social-01",
+      "category": "social-media",
+      "title": "Instagram",
+      "subtitle": "@yourhandle",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Content",
+        "Community"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/social/social-01.svg"
+      },
+      "link": {
+        "label": "Open Instagram",
+        "url": "#"
+      }
+    },
+    {
+      "id": "social-02",
+      "category": "social-media",
+      "title": "TikTok",
+      "subtitle": "@yourhandle",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Content",
+        "Community"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/social/social-02.svg"
+      },
+      "link": {
+        "label": "Open TikTok",
+        "url": "#"
+      }
+    },
+    {
+      "id": "social-03",
+      "category": "social-media",
+      "title": "YouTube",
+      "subtitle": "@yourchannel",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Content",
+        "Community"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/social/social-03.svg"
+      },
+      "link": {
+        "label": "Open YouTube",
+        "url": "#"
+      }
+    },
+    {
+      "id": "social-04",
+      "category": "social-media",
+      "title": "X / Twitter",
+      "subtitle": "@yourhandle",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Content",
+        "Community"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/social/social-04.svg"
+      },
+      "link": {
+        "label": "Open X / Twitter",
+        "url": "#"
+      }
+    },
+    {
+      "id": "build-01",
+      "category": "builds",
+      "title": "Custom PC Build",
+      "subtitle": "Build · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Hardware",
+        "Design"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/builds/build-01.svg"
+      },
+      "link": {
+        "label": "See the build",
+        "url": "#"
+      }
+    },
+    {
+      "id": "build-02",
+      "category": "builds",
+      "title": "Home Lab Server",
+      "subtitle": "Build · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Hardware",
+        "Design"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/builds/build-02.svg"
+      },
+      "link": {
+        "label": "See the build",
+        "url": "#"
+      }
+    },
+    {
+      "id": "build-03",
+      "category": "builds",
+      "title": "Desk Setup",
+      "subtitle": "Build · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Hardware",
+        "Design"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/builds/build-03.svg"
+      },
+      "link": {
+        "label": "See the build",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-01",
+      "category": "projects",
+      "title": "Web App",
+      "subtitle": "Project · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Design",
+        "Development"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/projects/project-01.svg"
+      },
+      "link": {
+        "label": "View project",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-02",
+      "category": "projects",
+      "title": "Mobile App",
+      "subtitle": "Project · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Design",
+        "Development"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/projects/project-02.svg"
+      },
+      "link": {
+        "label": "View project",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-03",
+      "category": "projects",
+      "title": "Brand Identity",
+      "subtitle": "Project · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Design",
+        "Development"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/projects/project-03.svg"
+      },
+      "link": {
+        "label": "View project",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-04",
+      "category": "projects",
+      "title": "Game Prototype",
+      "subtitle": "Project · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Design",
+        "Development"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/projects/project-04.svg"
+      },
+      "link": {
+        "label": "View project",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-05",
+      "category": "projects",
+      "title": "Open Source Tool",
+      "subtitle": "Project · 2026",
+      "description": "Placeholder description. Send me the real text for this tile and it goes here: what it is, what you did, the tools you used, and the result.",
+      "tags": [
+        "Design",
+        "Development"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/projects/project-05.svg"
+      },
+      "link": {
+        "label": "View project",
+        "url": "#"
+      }
+    }
+  ]
+}
