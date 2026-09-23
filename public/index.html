@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>A1WAI — Portfolio</title>
+  <meta name="description" content="Videos, social media, builds and projects." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" data-link aria-label="Home">
+      <img class="brand-logo" src="/favicon.svg" alt="" width="40" height="40" />
+    </a>
+    <p class="brand-intro" data-bind="intro"></p>
+  </header>
+
+  <!-- Index: the 3D tile stream -->
+  <main id="stream" class="stream" aria-label="Portfolio tiles">
+    <div class="stream-world" id="stream-world"></div>
+    <div class="stream-caption" aria-live="polite">
+      <span class="stream-count" id="stream-count">01 / 18</span>
+      <span class="stream-title" id="stream-title"></span>
+      <span class="stream-hint">Scroll, drag or use arrow keys</span>
+    </div>
+    <div class="stream-progress" aria-hidden="true"><span id="stream-progress-bar"></span></div>
+  </main>
+
+  <!-- Every other page renders in here -->
+  <section id="page" class="page" hidden></section>
+
+  <footer class="bottombar">
+    <span class="copyright" data-bind="copyright"></span>
+    <nav class="nav" aria-label="Main">
+      <a href="/" data-link data-route="index">Index</a>
+      <a href="/videos" data-link data-route="videos">Videos</a>
+      <a href="/social-media" data-link data-route="social-media">Social Media</a>
+      <a href="/builds" data-link data-route="builds">Builds</a>
+      <a href="/projects" data-link data-route="projects">Projects</a>
+      <a href="/about" data-link data-route="about">About</a>
+    </nav>
+    <a class="email" data-bind="email"></a>
+  </footer>
+
+  <!-- Tile detail overlay -->
+  <div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" type="button" aria-label="Close">Close ✕</button>
+    <div class="modal-inner">
+      <div class="modal-media" id="modal-media"></div>
+      <div class="modal-body">
+        <span class="modal-cat" id="modal-cat"></span>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-sub" id="modal-sub"></p>
+        <p class="modal-desc" id="modal-desc"></p>
+        <ul class="tags" id="modal-tags"></ul>
+        <a class="button" id="modal-link" target="_blank" rel="noopener"></a>
+        <div class="modal-nav">
+          <button type="button" data-step="-1">← Prev</button>
+          <button type="button" data-step="1">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

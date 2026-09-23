@@ -1,0 +1,20 @@
+{
+  "name": "a1wai-portfolio",
+  "version": "0.1.0",
+  "description": "3D tile-stream portfolio website",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "placeholders": "node scripts/generate-placeholders.mjs",
+    "placeholder-videos": "node scripts/record-placeholder-videos.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
