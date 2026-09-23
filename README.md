@@ -18,10 +18,17 @@ npm run dev        # same, restarts when server.js changes
 
 Set `PORT` to use a different port. Requires Node 18+.
 
+## Deploy on Vercel
+
+The site deploys as a static site; `vercel.json` sets it up (no build step,
+serves `public/`, and rewrites `/videos`, `/about`, etc. to `index.html`).
+Import the repo in Vercel and deploy. Production deploys come from `main`;
+every other branch gets its own preview URL.
+
 ## Editing content
 
-Everything on the site comes from **`data/content.json`**. It is re-read on every
-request, so just save and refresh the browser.
+Everything on the site comes from **`public/content.json`**. Save it and refresh
+the browser.
 
 - `site`: name (browser tab title) and email (shown on the About page).
 - `pages`: the title and intro for each section page, plus the About page text.
@@ -61,8 +68,9 @@ The sample media in `public/media` is generated placeholder art
 ## Structure
 
 ```
-server.js              Express server: static files, page routes, /api/content
-data/content.json      all site content
+server.js              Express server for local use: static files + page routes
+vercel.json            Vercel config (static site + page rewrites)
+public/content.json    all site content
 public/index.html      page shell (top intro, bottom bar, detail modal)
 public/css/style.css   all styles
 public/js/main.js      loads content, client-side routing

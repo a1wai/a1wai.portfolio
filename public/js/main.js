@@ -16,9 +16,13 @@ const pageEl = document.getElementById('page');
 const streamEl = document.getElementById('stream');
 
 async function loadContent() {
-  const res = await fetch('/api/content');
-  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
-  return res.json();
+  const res = await fetch('/content.json', { cache: 'no-cache' });
+  if (!res.ok) throw new Error(res.statusText);
+  try {
+    return await res.json();
+  } catch (err) {
+    throw new Error(`public/content.json is not valid JSON (${err.message})`);
+  }
 }
 
 // Fisher–Yates shuffle so the stream starts in a different order every load.
