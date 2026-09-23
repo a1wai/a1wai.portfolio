@@ -1,34 +1,34 @@
 import { CATEGORY_LABELS, createMedia, play, reducedMotion } from './media.js';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-const pad = (n) => String(n).padStart(2, '0');
 
-// How far a tile at distance `d` from the focused one sits from it,
-// expressed as a fraction of the tile size. Tweak these to reshape the stream.
+// How far a tile at distance `d` from the front sits from it, expressed as a
+// fraction of the tile size. Tweak these to reshape the stream.
 const STEP_X = 0.27;
 const STEP_Y = 0.11;
 const STEP_Z = 0.5;
 const ROTATE_Y = 50; // deg — tiles face the viewer's left, like cards in a rack
 const ROTATE_Z = -3;
-const VIDEO_RANGE = 5; // only videos this close to focus keep playing
+const DRIFT = 0.35; // tiles per second the stream moves on its own
+const BEHIND = 3; // tiles kept on screen after they pass the front
 
 /**
- * The index page: every tile laid out in 3D, one behind the other.
- * Scroll / drag / arrow keys move a float "position" through the stream.
+ * The index page: every tile laid out in 3D, one behind the other, drifting
+ * forever. Scroll / drag / arrow keys push it along; it wraps around endlessly.
  */
-export function createStream({ root, world, tiles, countEl, titleEl, progressEl, onOpen }) {
+export function createStream({ root, world, tiles, onOpen }) {
   const n = tiles.length;
   let target = 0;
   let current = 0;
-  let lastDir = 1;
+  let direction = 1;
+  let driftScale = 1;
+  let hovering = false;
   let visible = false;
   let running = false;
   let lastTime = 0;
-  let focusIndex = -1;
   let size = 300;
   let anchorX = 0;
   let anchorY = 0;
-  let snapTimer = 0;
 
   const els = tiles.map((tile, i) => {
     const el = document.createElement('button');
@@ -39,22 +39,15 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
     const face = document.createElement('span');
     face.className = 'tile-face';
     face.append(createMedia(tile.media, { eager: true }));
-
-    const badge = document.createElement('span');
-    badge.className = 'tile-badge';
-    badge.textContent = CATEGORY_LABELS[tile.category] || tile.category;
-    face.append(badge);
-
     el.append(face);
+
     el.addEventListener('click', () => {
-      if (suppressClick) return;
-      goTo(i);
-      onOpen(i);
+      if (!suppressClick) onOpen(i);
     });
-    // Tabbing through tiles scrolls the stream (mouse focus is left to click).
-    el.addEventListener('focus', () => el.matches(':focus-visible') && goTo(i));
+    el.addEventListener('pointerenter', () => (hovering = true));
+    el.addEventListener('pointerleave', () => (hovering = false));
     world.append(el);
-    return { el, video: el.querySelector('video') };
+    return { el, video: el.querySelector('video'), playing: false };
   });
 
   function layout() {
@@ -65,89 +58,70 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
     anchorX = mobile ? -w * 0.1 : -w * 0.12;
     anchorY = mobile ? h * 0.02 : h * 0.06;
     root.style.setProperty('--tile', `${size}px`);
-    render(true);
+    render();
   }
 
-  function render(force = false) {
+  function render() {
     for (let i = 0; i < n; i++) {
-      const d = i - current;
-      // Tiles already passed swing out to the bottom-left so they never hide
-      // the focused tile.
+      // Distance from the front, wrapped so the 18 tiles repeat forever.
+      const d = ((((i - current + BEHIND) % n) + n) % n) - BEHIND;
+
+      // Tiles already passed swing out to the bottom-left.
       const past = Math.min(d, 0);
       const x = anchorX + d * size * STEP_X + past * size * 0.95;
       const y = anchorY - d * size * STEP_Y - past * size * 0.3;
       const z = -d * size * STEP_Z;
 
-      // Fade tiles out as they fly past the camera, and far in the distance.
+      // Fade out just before wrapping, at both ends, so the jump is invisible.
       let opacity = 1;
       if (d < -2.2) opacity = clamp(1 - (-d - 2.2) / 0.6, 0, 1);
-      else if (d > 12) opacity = clamp(1 - (d - 12) / 5, 0, 1);
+      else if (d > n - BEHIND - 4) opacity = clamp((n - BEHIND - 0.6 - d) / 3.4, 0, 1);
 
-      const { el } = els[i];
-      el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${ROTATE_Y}deg) rotateZ(${ROTATE_Z}deg)`;
-      el.style.opacity = opacity.toFixed(3);
-      el.style.visibility = opacity < 0.02 ? 'hidden' : '';
-      el.style.zIndex = String(1000 - i);
+      const tile = els[i];
+      tile.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${ROTATE_Y}deg) rotateZ(${ROTATE_Z}deg)`;
+      tile.el.style.opacity = opacity.toFixed(3);
+      tile.el.style.visibility = opacity < 0.02 ? 'hidden' : '';
+
+      if (tile.video) {
+        const shouldPlay = visible && opacity > 0.02;
+        if (shouldPlay !== tile.playing) {
+          tile.playing = shouldPlay;
+          shouldPlay ? play(tile.video) : tile.video.pause();
+        }
+      }
     }
-
-    const idx = clamp(Math.round(current), 0, n - 1);
-    if (idx !== focusIndex || force) {
-      focusIndex = idx;
-      els.forEach(({ el }, i) => el.classList.toggle('is-active', i === idx));
-      const tile = tiles[idx];
-      countEl.textContent = `${pad(idx + 1)} / ${pad(n)} · ${CATEGORY_LABELS[tile.category] || tile.category}`;
-      titleEl.textContent = tile.title;
-      syncVideos();
-    }
-    progressEl.style.transform = `scaleY(${n > 1 ? clamp(current / (n - 1), 0, 1) : 1})`;
-  }
-
-  function syncVideos() {
-    els.forEach(({ video }, i) => {
-      if (!video) return;
-      if (visible && Math.abs(i - focusIndex) <= VIDEO_RANGE) play(video);
-      else video.pause();
-    });
   }
 
   function frame(time) {
+    if (!visible) {
+      running = false;
+      return;
+    }
     const dt = lastTime ? Math.min(64, time - lastTime) : 16.7;
     lastTime = time;
+
+    // Ease the drift down while a tile is hovered or the stream is dragged.
+    const wantDrift = hovering || dragging || reducedMotion.matches ? 0 : 1;
+    driftScale += (wantDrift - driftScale) * (1 - Math.pow(0.95, dt / 16.667));
+    target += direction * DRIFT * driftScale * (dt / 1000);
+
     const k = reducedMotion.matches ? 1 : 1 - Math.pow(1 - 0.09, dt / 16.667);
     current += (target - current) * k;
-    if (Math.abs(target - current) < 0.0005) current = target;
     render();
-    if (current !== target || dragging) {
-      requestAnimationFrame(frame);
-    } else {
-      running = false;
-    }
+    requestAnimationFrame(frame);
   }
 
-  function kick() {
+  function start() {
     if (running || !visible) return;
     running = true;
     lastTime = 0;
     requestAnimationFrame(frame);
   }
 
-  function goTo(i) {
-    const next = clamp(Math.round(i), 0, n - 1);
-    lastDir = next >= target ? 1 : -1;
-    target = next;
-    kick();
-  }
-
-  // Snap to a whole tile, favouring the direction the user was moving in so a
-  // small nudge still advances one tile.
-  function snap() {
-    const t = lastDir > 0 ? Math.ceil(target - 0.2) : Math.floor(target + 0.2);
-    target = clamp(t, 0, n - 1);
-    kick();
-  }
-
-  function markMoved() {
-    root.classList.add('has-moved');
+  function push(amount) {
+    if (!amount) return;
+    direction = Math.sign(amount);
+    target += amount;
   }
 
   // --- wheel / trackpad --------------------------------------------------
@@ -158,13 +132,7 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
       let delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (e.deltaMode === 1) delta *= 32;
       else if (e.deltaMode === 2) delta *= window.innerHeight;
-      if (!delta) return;
-      lastDir = Math.sign(delta);
-      target = clamp(target + delta * 0.003, -0.25, n - 0.75);
-      markMoved();
-      kick();
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(snap, 140);
+      push(delta * 0.003);
     },
     { passive: false },
   );
@@ -195,22 +163,18 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
       suppressClick = true;
       root.classList.add('is-dragging');
       root.setPointerCapture(pointerId);
-      markMoved();
     }
     if (!suppressClick) return;
     // Dragging left or up travels deeper into the stream.
-    const advance = (-dx - dy) / (size * 0.9);
-    const next = clamp(startTarget + advance, -0.4, n - 0.6);
-    if (next !== target) lastDir = Math.sign(next - target);
+    const next = startTarget + (-dx - dy) / (size * 0.9);
+    if (next !== target) direction = Math.sign(next - target);
     target = next;
-    kick();
   });
 
   const endDrag = (e) => {
     if (!dragging || e.pointerId !== pointerId) return;
     dragging = false;
     root.classList.remove('is-dragging');
-    if (suppressClick) snap();
     // Let the click event (fired right after pointerup) see suppressClick.
     setTimeout(() => (suppressClick = false), 0);
   };
@@ -224,14 +188,7 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
     const keys = { ArrowRight: 1, ArrowDown: 1, PageDown: 1, ArrowLeft: -1, ArrowUp: -1, PageUp: -1 };
     if (e.key in keys) {
       e.preventDefault();
-      markMoved();
-      goTo(Math.round(target) + keys[e.key]);
-    } else if (e.key === 'Home') {
-      goTo(0);
-    } else if (e.key === 'End') {
-      goTo(n - 1);
-    } else if (e.key === 'Enter' && !e.target.closest('a, button')) {
-      onOpen(Math.round(target));
+      push(keys[e.key]);
     }
   });
 
@@ -242,12 +199,8 @@ export function createStream({ root, world, tiles, countEl, titleEl, progressEl,
     setVisible(value) {
       visible = value;
       root.hidden = !value;
-      syncVideos();
-      if (value) {
-        render(true);
-        kick();
-      }
+      render();
+      start();
     },
-    goTo,
   };
 }

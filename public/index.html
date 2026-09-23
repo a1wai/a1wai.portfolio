@@ -13,38 +13,22 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="/" data-link aria-label="Home">
-      <img class="brand-logo" src="/favicon.svg" alt="" width="40" height="40" />
-    </a>
-    <p class="brand-intro" data-bind="intro"></p>
-  </header>
-
   <!-- Index: the 3D tile stream -->
   <main id="stream" class="stream" aria-label="Portfolio tiles">
     <div class="stream-world" id="stream-world"></div>
-    <div class="stream-caption" aria-live="polite">
-      <span class="stream-count" id="stream-count">01 / 18</span>
-      <span class="stream-title" id="stream-title"></span>
-      <span class="stream-hint">Scroll, drag or use arrow keys</span>
-    </div>
-    <div class="stream-progress" aria-hidden="true"><span id="stream-progress-bar"></span></div>
   </main>
 
   <!-- Every other page renders in here -->
   <section id="page" class="page" hidden></section>
 
   <footer class="bottombar">
-    <span class="copyright" data-bind="copyright"></span>
     <nav class="nav" aria-label="Main">
-      <a href="/" data-link data-route="index">Index</a>
       <a href="/videos" data-link data-route="videos">Videos</a>
       <a href="/social-media" data-link data-route="social-media">Social Media</a>
       <a href="/builds" data-link data-route="builds">Builds</a>
       <a href="/projects" data-link data-route="projects">Projects</a>
       <a href="/about" data-link data-route="about">About</a>
     </nav>
-    <a class="email" data-bind="email"></a>
   </footer>
 
   <!-- Tile detail overlay -->

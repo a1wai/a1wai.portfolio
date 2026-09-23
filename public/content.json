@@ -1,9 +1,7 @@
 {
   "site": {
     "name": "A1WAI",
-    "intro": "A1WAI is a creator, builder and designer making videos, social content, hardware builds and digital projects.",
-    "email": "hello@example.com",
-    "copyright": "©2026 A1WAI"
+    "email": "hello@example.com"
   },
   "pages": {
     "videos": {

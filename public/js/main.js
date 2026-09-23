@@ -16,32 +16,35 @@ const pageEl = document.getElementById('page');
 const streamEl = document.getElementById('stream');
 
 async function loadContent() {
-  const res = await fetch('/api/content');
-  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
-  return res.json();
+  const res = await fetch('/content.json', { cache: 'no-cache' });
+  if (!res.ok) throw new Error(res.statusText);
+  try {
+    return await res.json();
+  } catch (err) {
+    throw new Error(`public/content.json is not valid JSON (${err.message})`);
+  }
 }
 
-function bindSiteText(site = {}) {
-  document.querySelector('[data-bind="intro"]').textContent = site.intro || '';
-  document.querySelector('[data-bind="copyright"]').textContent = site.copyright || '';
-  const email = document.querySelector('[data-bind="email"]');
-  email.textContent = site.email || '';
-  email.href = site.email ? `mailto:${site.email}` : '';
+// Fisher–Yates shuffle so the stream starts in a different order every load.
+function shuffle(list) {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
 }
 
 function start(content) {
-  bindSiteText(content.site);
+  const tiles = shuffle(content.tiles);
   const siteName = content.site?.name || 'Portfolio';
 
   const modal = createModal(document.getElementById('modal'));
   const stream = createStream({
     root: streamEl,
     world: document.getElementById('stream-world'),
-    tiles: content.tiles,
-    countEl: document.getElementById('stream-count'),
-    titleEl: document.getElementById('stream-title'),
-    progressEl: document.getElementById('stream-progress-bar'),
-    onOpen: (i) => modal.open(content.tiles, i),
+    tiles,
+    onOpen: (i) => modal.open(tiles, i),
   });
 
   function render() {
@@ -80,7 +83,9 @@ function start(content) {
     const link = e.target.closest('a[data-link]');
     if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
-    if (link.pathname !== location.pathname) history.pushState(null, '', link.pathname);
+    // Nav buttons toggle: pressing the open page's button closes it again.
+    const next = link.pathname === location.pathname ? '/' : link.pathname;
+    if (next !== location.pathname) history.pushState(null, '', next);
     render();
   });
   window.addEventListener('popstate', render);
