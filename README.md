@@ -1,11 +1,12 @@
 # a1wai.portfolio
 
-A portfolio site with a 3D "tile stream" index: 18 tiles (videos, social media,
-builds, projects) stacked in space on a solid black background. Scroll, drag or
-use the arrow keys to travel through them; click a tile to open its details.
+A portfolio site with a 3D "tile stream" home page: 18 tiles (videos, social
+media, builds, projects) stacked in space on a solid black background. The
+stream moves on its own and loops forever; scroll, drag or use the arrow keys to
+push it either way. Tiles are shuffled on every load. Click a tile to open it.
 
-The bottom bar links to a separate page for each section:
-**Index · Videos · Social Media · Builds · Projects · About**.
+The text-only bottom bar has **Videos · Social Media · Builds · Projects ·
+About**. Each button opens its page; pressing it again closes it.
 
 ## Run it
 
@@ -22,9 +23,9 @@ Set `PORT` to use a different port. Requires Node 18+.
 Everything on the site comes from **`data/content.json`**. It is re-read on every
 request, so just save and refresh the browser.
 
-- `site`: name, intro text (top left), email, copyright line.
+- `site`: name (browser tab title) and email (shown on the About page).
 - `pages`: the title and intro for each section page, plus the About page text.
-- `tiles`: the 18 tiles, in the order they appear in the stream. Each tile:
+- `tiles`: the tiles (any number; the home page shuffles them). Each tile:
 
 ```jsonc
 {
@@ -71,5 +72,5 @@ public/js/modal.js     tile detail view
 public/media/          images and videos
 ```
 
-To reshape the stream (spacing, angle), change the constants at the top of
-`public/js/stream.js`.
+To reshape the stream (spacing, angle, auto-scroll speed), change the constants
+at the top of `public/js/stream.js`.
