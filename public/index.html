@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>A1WAI — Portfolio</title>
-  <meta name="description" content="Videos, social media, builds and projects." />
+  <meta name="description" content="Portfolio of A1WAI." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,42 +13,15 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <header class="topnav">
-    <nav class="nav" aria-label="Main">
-      <a href="/videos" data-link data-route="videos">Videos</a>
-      <a href="/social-media" data-link data-route="social-media">Social Media</a>
-      <a href="/builds" data-link data-route="builds">Builds</a>
-      <a href="/projects" data-link data-route="projects">Projects</a>
-      <a href="/about" data-link data-route="about">About</a>
-    </nav>
-  </header>
-
-  <!-- Index: the 3D tile stream -->
+  <!-- The 3D tile stream -->
   <main id="stream" class="stream" aria-label="Portfolio tiles">
     <div class="stream-world" id="stream-world"></div>
   </main>
 
-  <!-- Every other page renders in here -->
-  <section id="page" class="page" hidden></section>
-
-  <!-- Tile detail overlay -->
-  <div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" type="button" aria-label="Close">Close ✕</button>
-    <div class="modal-inner">
-      <div class="modal-media" id="modal-media"></div>
-      <div class="modal-body">
-        <span class="modal-cat" id="modal-cat"></span>
-        <h2 class="modal-title" id="modal-title"></h2>
-        <p class="modal-sub" id="modal-sub"></p>
-        <p class="modal-desc" id="modal-desc"></p>
-        <ul class="tags" id="modal-tags"></ul>
-        <a class="button" id="modal-link" target="_blank" rel="noopener"></a>
-        <div class="modal-nav">
-          <button type="button" data-step="-1">← Prev</button>
-          <button type="button" data-step="1">Next →</button>
-        </div>
-      </div>
-    </div>
+  <!-- Opened video / About, over a blurred background -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Viewer">
+    <button class="lightbox-close" type="button" aria-label="Close">✕</button>
+    <div class="lightbox-content" id="lightbox-content"></div>
   </div>
 
   <script type="module" src="/js/main.js"></script>

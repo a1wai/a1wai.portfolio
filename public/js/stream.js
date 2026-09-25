@@ -1,4 +1,4 @@
-import { CATEGORY_LABELS, createMedia, play, reducedMotion } from './media.js';
+import { createMedia, play, reducedMotion } from './media.js';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -10,6 +10,7 @@ const STEP_Z = 0.5;
 const ROTATE_Y = 50; // deg — tiles face the viewer's left, like cards in a rack
 const ROTATE_Z = -3;
 const BEHIND = 3; // tiles kept on screen after they pass the front
+const PLAY_AHEAD = 5; // videos this many tiles behind the front still play
 
 /**
  * The index page: every tile laid out in 3D, one behind the other.
@@ -30,15 +31,21 @@ export function createStream({ root, world, tiles, onOpen }) {
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'tile';
-    el.setAttribute('aria-label', `${tile.title} (${CATEGORY_LABELS[tile.category] || tile.category})`);
+    // Generic screen-reader label only; file names are never exposed.
+    el.setAttribute('aria-label', tile.type === 'about' ? 'About' : tile.type === 'video' ? 'Play video' : 'Open link');
 
     const face = document.createElement('span');
     face.className = 'tile-face';
-    face.append(createMedia(tile.media, { eager: true }));
+    if (tile.type === 'about') {
+      face.classList.add('tile-about');
+      face.textContent = 'About';
+    } else {
+      face.append(createMedia(tile));
+    }
     el.append(face);
 
     el.addEventListener('click', () => {
-      if (!suppressClick) onOpen(i);
+      if (!suppressClick) onOpen(tile);
     });
     world.append(el);
     return { el, video: el.querySelector('video'), playing: false };
@@ -57,7 +64,7 @@ export function createStream({ root, world, tiles, onOpen }) {
 
   function render() {
     for (let i = 0; i < n; i++) {
-      // Distance from the front, wrapped so the 18 tiles repeat forever.
+      // Distance from the front, wrapped so the tiles repeat forever.
       const d = ((((i - current + BEHIND) % n) + n) % n) - BEHIND;
 
       // Tiles already passed swing out to the bottom-left.
@@ -77,7 +84,9 @@ export function createStream({ root, world, tiles, onOpen }) {
       tile.el.style.visibility = opacity < 0.02 ? 'hidden' : '';
 
       if (tile.video) {
-        const shouldPlay = visible && opacity > 0.02;
+        // Only the tiles near the front play; the rest show their poster, so
+        // the page doesn't download every video at once.
+        const shouldPlay = visible && d > -1.5 && d < PLAY_AHEAD;
         if (shouldPlay !== tile.playing) {
           tile.playing = shouldPlay;
           shouldPlay ? play(tile.video) : tile.video.pause();
@@ -176,7 +185,7 @@ export function createStream({ root, world, tiles, onOpen }) {
   // --- keyboard ------------------------------------------------------------
   document.addEventListener('keydown', (e) => {
     if (!visible || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-    if (document.body.classList.contains('modal-open')) return;
+    if (document.body.classList.contains('lightbox-open')) return;
     const keys = { ArrowRight: 1, ArrowDown: 1, PageDown: 1, ArrowLeft: -1, ArrowUp: -1, PageUp: -1 };
     if (e.key in keys) {
       e.preventDefault();
