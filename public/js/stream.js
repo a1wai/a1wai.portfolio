@@ -30,8 +30,8 @@ export function createStream({ root, world, tiles, onOpen }) {
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'tile';
-    // Screen-reader label only; nothing is shown on the tile itself.
-    el.setAttribute('aria-label', tile.label || (tile.type === 'about' ? 'About' : tile.type === 'video' ? 'Play video' : 'Open link'));
+    // Generic screen-reader label only; file names are never exposed.
+    el.setAttribute('aria-label', tile.type === 'about' ? 'About' : tile.type === 'video' ? 'Play video' : 'Open link');
 
     const face = document.createElement('span');
     face.className = 'tile-face';

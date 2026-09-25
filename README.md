@@ -45,5 +45,5 @@ npm start          # http://localhost:3000
 }
 ```
 
-Optional per tile: `"poster"` (a still shown while a video loads) and
-`"label"` (read out by screen readers, never shown).
+Optional for videos: `"poster"` (a still shown while the video loads). File
+names are never shown on the site, not even as alt text.

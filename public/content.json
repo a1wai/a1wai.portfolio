@@ -4,7 +4,7 @@
   },
   "about": {
     "title": "About",
-    "headline": "Placeholder headline — send me your About text.",
+    "headline": "Placeholder headline \u2014 send me your About text.",
     "paragraphs": [
       "Placeholder paragraph. Your About content goes here."
     ],
@@ -73,37 +73,31 @@
     },
     {
       "type": "image",
-      "label": "arminn_ai",
       "src": "/media/social/social-01.svg",
       "url": "https://www.instagram.com/arminn_ai"
     },
     {
       "type": "image",
-      "label": "bob.dominator",
       "src": "/media/social/social-02.svg",
       "url": "https://www.instagram.com/bob.dominator"
     },
     {
       "type": "image",
-      "label": "its.chriscarter",
       "src": "/media/social/social-03.svg",
       "url": "https://www.instagram.com/its.chriscarter"
     },
     {
       "type": "image",
-      "label": "natural.solutions.us",
       "src": "/media/social/social-04.svg",
       "url": "https://www.instagram.com/natural.solutions.us"
     },
     {
       "type": "image",
-      "label": "moriahlapp",
       "src": "/media/builds/build-01.svg",
       "url": "https://www.instagram.com/moriahlapp"
     },
     {
       "type": "image",
-      "label": "Sara",
       "src": "/media/builds/build-02.svg",
       "url": "https://www.youtube.com/@JanellaThroughTime"
     },
