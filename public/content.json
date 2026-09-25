@@ -4,9 +4,38 @@
   },
   "about": {
     "title": "About",
-    "headline": "Placeholder headline \u2014 send me your About text.",
-    "paragraphs": [
-      "Placeholder paragraph. Your About content goes here."
+    "headline": "Creating content and building online since 2015.",
+    "timeline": [
+      {
+        "when": "2015",
+        "title": "YouTube Beginnings",
+        "text": "Started my first YouTube channels, learning the fundamentals of content creation and audience building."
+      },
+      {
+        "when": "2015–2018",
+        "title": "Instagram Growth",
+        "text": "Built and scaled Instagram accounts to over 10 million followers collectively; monetized through shoutout sales."
+      },
+      {
+        "when": "2018–2022",
+        "title": "Digital Asset Trading",
+        "text": "Sold my Instagram and YouTube accounts as digital assets; continued buying and selling social media accounts."
+      },
+      {
+        "when": "",
+        "title": "Social Media Consulting",
+        "text": "Worked as a social media consultant for a company, advising on growth and content strategy."
+      },
+      {
+        "when": "",
+        "title": "Web & App Development",
+        "text": "Learned to build websites and Shopify stores; developed apps and taught myself to code using AI tools like Claude, maintaining an active portfolio of projects on GitHub."
+      },
+      {
+        "when": "2024–Present",
+        "title": "AI Video & Content Production",
+        "text": "Shifted focus to AI-generated video, producing fully realistic AI video content; built multiple AI influencer characters and channels across YouTube, TikTok, Instagram, and Facebook, spanning wellness, music, historical vlogs, and lifestyle content. Also take on freelance client work in AI content production."
+      }
     ],
     "links": []
   },

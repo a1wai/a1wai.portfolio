@@ -36,6 +36,25 @@ export function createLightbox(root) {
     add('h2', about.title || 'About', 'about-title');
     add('p', about.headline, 'about-headline');
     (about.paragraphs || []).forEach((p) => add('p', p));
+    if (about.timeline?.length) {
+      const list = document.createElement('ol');
+      list.className = 'timeline';
+      for (const item of about.timeline) {
+        const li = document.createElement('li');
+        const when = document.createElement('span');
+        when.className = 'timeline-when';
+        when.textContent = item.when || '';
+        const body = document.createElement('div');
+        const h = document.createElement('h3');
+        h.textContent = item.title;
+        const p = document.createElement('p');
+        p.textContent = item.text;
+        body.append(h, p);
+        li.append(when, body);
+        list.append(li);
+      }
+      wrap.append(list);
+    }
     if (about.links?.length) {
       const list = document.createElement('ul');
       list.className = 'about-links';

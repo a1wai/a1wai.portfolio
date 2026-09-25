@@ -28,7 +28,7 @@ function start(content) {
   const stream = createStream({
     root: document.getElementById('stream'),
     world: document.getElementById('stream-world'),
-    backdrop: document.getElementById('backdrop-world'),
+    backdrop: document.getElementById('backdrop'),
     tiles: shuffle(content.tiles),
     onOpen(tile) {
       if (tile.type === 'video') lightbox.openVideo(tile);
