@@ -56,29 +56,21 @@ button {
 /* Blurred background layer                                           */
 /* ------------------------------------------------------------------ */
 
-/* Oversized so the blur never pulls black in from the screen edges. */
+/* A tiny canvas (see ambient.js) stretched over the screen; the stretch is
+   the blur. Only cheap colour filters run here, except on browsers whose
+   canvas can't blur by itself. */
 .backdrop {
   position: fixed;
-  inset: -15vmax;
+  inset: 0;
   z-index: 0;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  filter: blur(70px) saturate(1.5) brightness(0.55);
+  filter: saturate(1.5) brightness(0.55);
 }
 
-/* Same perspective as the stream, then zoomed way in on the front tile. */
-.backdrop-zoom {
-  position: absolute;
-  inset: 15vmax;
-  perspective: 1500px;
-  perspective-origin: 50% 35%;
-  transform: scale(2.6);
-  transform-origin: 40% 55%;
-}
-
-.backdrop .tile-face {
-  box-shadow: none;
-  transition: none;
+.backdrop.no-ctx-filter {
+  filter: blur(14px) saturate(1.5) brightness(0.55);
 }
 
 /* ------------------------------------------------------------------ */
@@ -153,7 +145,12 @@ button {
   -webkit-user-drag: none;
 }
 
-.tile:hover .tile-face,
+@media (hover: hover) {
+  .tile:hover .tile-face {
+    transform: translateZ(60px);
+  }
+}
+
 .tile:focus-visible .tile-face {
   transform: translateZ(60px);
 }
@@ -251,7 +248,9 @@ button {
 /* About */
 
 .lightbox-content.is-about {
-  overflow: auto;
+  place-items: start center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .about {
@@ -279,6 +278,48 @@ button {
   margin: 0 0 14px;
   font-size: 17px;
   color: rgba(255, 255, 255, 0.82);
+}
+
+.timeline {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 9.5em minmax(0, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.timeline-when {
+  padding-top: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.about .timeline p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
 }
 
 .about-links {

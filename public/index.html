@@ -14,11 +14,7 @@
 </head>
 <body>
   <!-- Background: a blurred, zoomed-in copy of the stream that moves with it -->
-  <div class="backdrop" aria-hidden="true">
-    <div class="backdrop-zoom">
-      <div class="stream-world" id="backdrop-world"></div>
-    </div>
-  </div>
+  <canvas class="backdrop" id="backdrop" aria-hidden="true"></canvas>
 
   <!-- The 3D tile stream -->
   <main id="stream" class="stream" aria-label="Portfolio tiles">
