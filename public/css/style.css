@@ -53,6 +53,35 @@ button {
 }
 
 /* ------------------------------------------------------------------ */
+/* Blurred background layer                                           */
+/* ------------------------------------------------------------------ */
+
+/* Oversized so the blur never pulls black in from the screen edges. */
+.backdrop {
+  position: fixed;
+  inset: -15vmax;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  filter: blur(70px) saturate(1.5) brightness(0.55);
+}
+
+/* Same perspective as the stream, then zoomed way in on the front tile. */
+.backdrop-zoom {
+  position: absolute;
+  inset: 15vmax;
+  perspective: 1500px;
+  perspective-origin: 50% 35%;
+  transform: scale(2.6);
+  transform-origin: 40% 55%;
+}
+
+.backdrop .tile-face {
+  box-shadow: none;
+  transition: none;
+}
+
+/* ------------------------------------------------------------------ */
 /* 3D tile stream                                                     */
 /* ------------------------------------------------------------------ */
 
@@ -66,6 +95,7 @@ button {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  z-index: 1;
   transition: opacity 0.5s var(--ease);
 }
 

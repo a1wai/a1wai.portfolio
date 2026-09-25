@@ -16,7 +16,7 @@ const PLAY_AHEAD = 5; // videos this many tiles behind the front still play
  * The index page: every tile laid out in 3D, one behind the other.
  * Scroll / drag / arrow keys move it along; it wraps around endlessly.
  */
-export function createStream({ root, world, tiles, onOpen }) {
+export function createStream({ root, world, backdrop, tiles, onOpen }) {
   const n = tiles.length;
   let target = 0;
   let current = 0;
@@ -48,8 +48,26 @@ export function createStream({ root, world, tiles, onOpen }) {
       if (!suppressClick) onOpen(tile);
     });
     world.append(el);
-    return { el, video: el.querySelector('video'), playing: false };
+    return { el, video: el.querySelector('video'), playing: false, mirror: createMirror(tile) };
   });
+
+  // A non-interactive copy of each tile for the blurred background layer.
+  // Videos show their poster there: under that much blur motion isn't visible.
+  function createMirror(tile) {
+    if (!backdrop) return null;
+    const el = document.createElement('div');
+    el.className = 'tile';
+    const face = document.createElement('span');
+    face.className = 'tile-face';
+    if (tile.type === 'about') {
+      face.classList.add('tile-about');
+    } else {
+      face.append(createMedia({ type: 'image', src: tile.type === 'video' ? tile.poster : tile.src }));
+    }
+    el.append(face);
+    backdrop.append(el);
+    return el;
+  }
 
   function layout() {
     const w = window.innerWidth;
@@ -58,7 +76,7 @@ export function createStream({ root, world, tiles, onOpen }) {
     size = clamp(Math.min(w * (mobile ? 0.62 : 0.3), h * 0.46), 170, 460);
     anchorX = mobile ? -w * 0.1 : -w * 0.12;
     anchorY = mobile ? h * 0.02 : h * 0.06;
-    root.style.setProperty('--tile', `${size}px`);
+    document.documentElement.style.setProperty('--tile', `${size}px`);
     render();
   }
 
@@ -79,9 +97,13 @@ export function createStream({ root, world, tiles, onOpen }) {
       else if (d > n - BEHIND - 4) opacity = clamp((n - BEHIND - 0.6 - d) / 3.4, 0, 1);
 
       const tile = els[i];
-      tile.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${ROTATE_Y}deg) rotateZ(${ROTATE_Z}deg)`;
-      tile.el.style.opacity = opacity.toFixed(3);
-      tile.el.style.visibility = opacity < 0.02 ? 'hidden' : '';
+      const transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${ROTATE_Y}deg) rotateZ(${ROTATE_Z}deg)`;
+      // The background copy gets the exact same placement, frame for frame.
+      for (const el of tile.mirror ? [tile.el, tile.mirror] : [tile.el]) {
+        el.style.transform = transform;
+        el.style.opacity = opacity.toFixed(3);
+        el.style.visibility = opacity < 0.02 ? 'hidden' : '';
+      }
 
       if (tile.video) {
         // Only the tiles near the front play; the rest show their poster, so
