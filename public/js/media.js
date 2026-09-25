@@ -1,28 +1,21 @@
-export const CATEGORY_LABELS = {
-  videos: 'Videos',
-  'social-media': 'Social Media',
-  builds: 'Builds',
-  projects: 'Projects',
-};
-
 export const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /**
- * Builds the <video> or <img> for a tile's `media` entry.
- * Videos are always muted + looping so browsers allow them to autoplay.
+ * Builds the <video> or <img> for a tile. Tile videos are always muted and
+ * looping so browsers allow them to autoplay.
  */
-export function createMedia(media = {}, { controls = false, eager = false } = {}) {
-  if (media.type === 'video') {
+export function createMedia(tile, { controls = false, muted = true } = {}) {
+  if (tile.type === 'video') {
     const video = document.createElement('video');
-    video.muted = true;
+    video.muted = muted;
     video.loop = true;
     video.playsInline = true;
-    video.setAttribute('muted', '');
+    if (muted) video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
-    video.preload = eager ? 'auto' : 'metadata';
-    if (media.poster) video.poster = media.poster;
+    video.preload = 'metadata';
+    if (tile.poster) video.poster = tile.poster;
     if (controls) video.controls = true;
-    video.src = media.src;
+    video.src = tile.src;
     return video;
   }
 
@@ -30,8 +23,7 @@ export function createMedia(media = {}, { controls = false, eager = false } = {}
   img.alt = '';
   img.decoding = 'async';
   img.draggable = false;
-  img.loading = eager ? 'eager' : 'lazy';
-  img.src = media.src || '';
+  img.src = tile.src || '';
   return img;
 }
 
@@ -39,8 +31,4 @@ export function play(video) {
   if (!video.paused) return;
   const p = video.play();
   if (p) p.catch(() => {});
-}
-
-export function escapeHtml(value = '') {
-  return String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 }

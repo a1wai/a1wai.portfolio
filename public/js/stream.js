@@ -1,4 +1,4 @@
-import { CATEGORY_LABELS, createMedia, play, reducedMotion } from './media.js';
+import { createMedia, play, reducedMotion } from './media.js';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -30,15 +30,21 @@ export function createStream({ root, world, tiles, onOpen }) {
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'tile';
-    el.setAttribute('aria-label', `${tile.title} (${CATEGORY_LABELS[tile.category] || tile.category})`);
+    // Screen-reader label only; nothing is shown on the tile itself.
+    el.setAttribute('aria-label', tile.label || (tile.type === 'about' ? 'About' : tile.type === 'video' ? 'Play video' : 'Open link'));
 
     const face = document.createElement('span');
     face.className = 'tile-face';
-    face.append(createMedia(tile.media, { eager: true }));
+    if (tile.type === 'about') {
+      face.classList.add('tile-about');
+      face.textContent = 'About';
+    } else {
+      face.append(createMedia(tile));
+    }
     el.append(face);
 
     el.addEventListener('click', () => {
-      if (!suppressClick) onOpen(i);
+      if (!suppressClick) onOpen(tile);
     });
     world.append(el);
     return { el, video: el.querySelector('video'), playing: false };
@@ -57,7 +63,7 @@ export function createStream({ root, world, tiles, onOpen }) {
 
   function render() {
     for (let i = 0; i < n; i++) {
-      // Distance from the front, wrapped so the 18 tiles repeat forever.
+      // Distance from the front, wrapped so the tiles repeat forever.
       const d = ((((i - current + BEHIND) % n) + n) % n) - BEHIND;
 
       // Tiles already passed swing out to the bottom-left.
@@ -176,7 +182,7 @@ export function createStream({ root, world, tiles, onOpen }) {
   // --- keyboard ------------------------------------------------------------
   document.addEventListener('keydown', (e) => {
     if (!visible || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-    if (document.body.classList.contains('modal-open')) return;
+    if (document.body.classList.contains('lightbox-open')) return;
     const keys = { ArrowRight: 1, ArrowDown: 1, PageDown: 1, ArrowLeft: -1, ArrowUp: -1, PageUp: -1 };
     if (e.key in keys) {
       e.preventDefault();
