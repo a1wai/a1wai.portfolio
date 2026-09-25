@@ -13,63 +13,63 @@
   "tiles": [
     {
       "type": "video",
-      "src": "/media/videos/video-01.webm",
-      "poster": "/media/videos/video-01.jpg"
+      "src": "/media/videos/arnold.mp4",
+      "poster": "/media/videos/arnold.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-02.webm",
-      "poster": "/media/videos/video-02.jpg"
+      "src": "/media/videos/erling-haaland.mp4",
+      "poster": "/media/videos/erling-haaland.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-03.webm",
-      "poster": "/media/videos/video-03.jpg"
+      "src": "/media/videos/hamster-slap.mp4",
+      "poster": "/media/videos/hamster-slap.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-04.webm",
-      "poster": "/media/videos/video-04.jpg"
+      "src": "/media/videos/owen-music.mp4",
+      "poster": "/media/videos/owen-music.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-05.webm",
-      "poster": "/media/videos/video-05.jpg"
+      "src": "/media/videos/real-estate-agent.mp4",
+      "poster": "/media/videos/real-estate-agent.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-06.webm",
-      "poster": "/media/videos/video-06.jpg"
+      "src": "/media/videos/realistic-ad.mp4",
+      "poster": "/media/videos/realistic-ad.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-01.webm",
-      "poster": "/media/videos/video-01.jpg"
+      "src": "/media/videos/bob-dominator-music-clip.mp4",
+      "poster": "/media/videos/bob-dominator-music-clip.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-02.webm",
-      "poster": "/media/videos/video-02.jpg"
+      "src": "/media/videos/its-chriscarter-health-consultant.mp4",
+      "poster": "/media/videos/its-chriscarter-health-consultant.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-03.webm",
-      "poster": "/media/videos/video-03.jpg"
+      "src": "/media/videos/jeannies-clips.mp4",
+      "poster": "/media/videos/jeannies-clips.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-04.webm",
-      "poster": "/media/videos/video-04.jpg"
+      "src": "/media/videos/moriahlapp-health-consultant.mp4",
+      "poster": "/media/videos/moriahlapp-health-consultant.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-05.webm",
-      "poster": "/media/videos/video-05.jpg"
+      "src": "/media/videos/natural-solutions-us-health-consultant.mp4",
+      "poster": "/media/videos/natural-solutions-us-health-consultant.jpg"
     },
     {
       "type": "video",
-      "src": "/media/videos/video-06.webm",
-      "poster": "/media/videos/video-06.jpg"
+      "src": "/media/videos/tasha-clips.mp4",
+      "poster": "/media/videos/tasha-clips.jpg"
     },
     {
       "type": "image",

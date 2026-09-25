@@ -7,9 +7,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js",
-    "placeholders": "node scripts/generate-placeholders.mjs",
-    "placeholder-videos": "node scripts/record-placeholder-videos.mjs"
+    "dev": "node --watch server.js"
   },
   "engines": {
     "node": ">=18"

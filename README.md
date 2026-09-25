@@ -23,9 +23,10 @@ npm start          # http://localhost:3000
 
 ## Adding content
 
-1. Put files in `public/media/videos/` (short `.mp4`, H.264) and
-   `public/media/photos/` (`.jpg`, `.png`, `.webp`). Use simple file names
-   without spaces or `@`.
+1. Put files in `public/media/videos/` (short `.mp4`, H.264, square works
+   best) and `public/media/photos/` (`.jpg`, `.png`, `.webp`). Use simple file
+   names without spaces or `@`. Give each video a `poster` still (same name,
+   `.jpg`) so tiles that aren't playing still show a picture.
 2. List them in `public/content.json`:
 
 ```jsonc

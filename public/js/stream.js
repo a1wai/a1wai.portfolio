@@ -10,6 +10,7 @@ const STEP_Z = 0.5;
 const ROTATE_Y = 50; // deg — tiles face the viewer's left, like cards in a rack
 const ROTATE_Z = -3;
 const BEHIND = 3; // tiles kept on screen after they pass the front
+const PLAY_AHEAD = 5; // videos this many tiles behind the front still play
 
 /**
  * The index page: every tile laid out in 3D, one behind the other.
@@ -83,7 +84,9 @@ export function createStream({ root, world, tiles, onOpen }) {
       tile.el.style.visibility = opacity < 0.02 ? 'hidden' : '';
 
       if (tile.video) {
-        const shouldPlay = visible && opacity > 0.02;
+        // Only the tiles near the front play; the rest show their poster, so
+        // the page doesn't download every video at once.
+        const shouldPlay = visible && d > -1.5 && d < PLAY_AHEAD;
         if (shouldPlay !== tile.playing) {
           tile.playing = shouldPlay;
           shouldPlay ? play(tile.video) : tile.video.pause();

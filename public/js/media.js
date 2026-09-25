@@ -12,7 +12,8 @@ export function createMedia(tile, { controls = false, muted = true } = {}) {
     video.playsInline = true;
     if (muted) video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
-    video.preload = 'metadata';
+    // With a poster there's nothing to show until it plays, so fetch nothing yet.
+    video.preload = tile.poster && muted ? 'none' : 'metadata';
     if (tile.poster) video.poster = tile.poster;
     if (controls) video.controls = true;
     video.src = tile.src;
